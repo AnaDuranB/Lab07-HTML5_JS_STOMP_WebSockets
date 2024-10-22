@@ -7,12 +7,30 @@ var app = (function () {
     }
 
     var stompClient = null;
+    var canvas, context;
 
-    var showAlertWithCoordinates = function (message) {
+    // Función para dibujar un punto en el canvas
+    var drawPoint = function (x, y) {
+        context.beginPath();
+        context.arc(x, y, 1, 0, 2 * Math.PI);  // Dibujar un círculo con radio 1
+        context.fillStyle = "black";  // Color del punto
+        context.fill();
+    };
+
+    var handleCanvasClick = function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        var pt = new Point(x, y);
+        console.info("Publishing point at: ", pt);
+        stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
+        drawPoint(x, y);
+    };
+
+    var handleNewPointEvent = function (message) {
         var receivedPoint = JSON.parse(message.body);
-        var x = receivedPoint.x;
-        var y = receivedPoint.y;
-        alert(`Received point - X: ${x}, Y: ${y}`);
+        drawPoint(receivedPoint.x, receivedPoint.y);
     };
 
     var connectAndSubscribe = function () {
@@ -22,20 +40,16 @@ var app = (function () {
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/newpoint', showAlertWithCoordinates);
+            stompClient.subscribe('/topic/newpoint', handleNewPointEvent);
         });
     };
 
     return {
         init: function () {
+            canvas = document.getElementById('canvas');
+            context = canvas.getContext('2d');
             connectAndSubscribe();
-        },
-
-        publishPoint: function (px, py) {
-            var pt = new Point(px, py);
-            console.info("Publishing point at " + pt);
-
-            stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));
+            canvas.addEventListener('click', handleCanvasClick); 
         },
 
         disconnect: function () {

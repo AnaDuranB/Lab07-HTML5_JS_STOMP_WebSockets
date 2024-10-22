@@ -48,7 +48,23 @@ Para esto, realice lo siguiente:
 	var theObject=JSON.parse(message.body);
 	```
 3. Compile y ejecute su aplicación. Abra la aplicación en varias pestañas diferentes (para evitar problemas con el caché del navegador, use el modo 'incógnito' en cada prueba).
+
+	![image](https://github.com/user-attachments/assets/df4a29fa-7401-40c8-b8e4-abe3b324991a)
+
 4. Ingrese los datos, ejecute la acción del botón, y verifique que en todas la pestañas se haya lanzado la alerta con los datos ingresados.
+
+	- Revisamos la primer pestaña
+
+		![image](https://github.com/user-attachments/assets/6099aeb8-5e6b-4309-9f4a-eb8360ac84e3)
+
+	- Revisamos la segunda pestaña
+
+		![image](https://github.com/user-attachments/assets/0390993f-9d92-40d8-aed2-c0bf1ed03144)
+
+	- Y por último la tercera, verificando así que en todas la pestañas se haya lanzado la alerta con los datos ingresados
+
+		![image](https://github.com/user-attachments/assets/7807831b-4a54-4723-ba13-72639990b169)
+
 
 5. Haga commit de lo realizado, para demarcar el avance de la parte 2.
 
@@ -62,9 +78,12 @@ Para esto, realice lo siguiente:
 Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con campos de formulario, las va a capturar a través de eventos sobre un elemento de tipo \<canvas>. De la misma manera, en lugar de simplemente mostrar las coordenadas enviadas en los eventos a través de 'alertas', va a dibujar dichos puntos en el mismo canvas. Haga uso del mecanismo de captura de eventos de mouse/táctil usado en ejercicios anteriores con este fin.
 
 1. Haga que el 'callback' asociado al tópico /topic/newpoint en lugar de mostrar una alerta, dibuje un punto en el canvas en las coordenadas enviadas con los eventos recibidos. Para esto puede [dibujar un círculo de radio 1](http://www.w3schools.com/html/html5_canvas.asp).
-4. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
+2. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
 
-5. Haga commit de lo realizado, para marcar el avance de la parte 2.
+	![image](https://github.com/user-attachments/assets/b9307ad0-f1d3-4edb-a0bc-431733638837)
+
+
+3. Haga commit de lo realizado, para marcar el avance de la parte 2.
 
 	```bash
 	git commit -m "PARTE 2".
