@@ -49,7 +49,29 @@ var app = (function () {
         }
     };
 
-    // Obtiene la posición del ratón en el canvas
+    var drawPolygonOnCanvas = function (points) {
+        console.log('Dibujando polígono con puntos:', points);
+        if (points.length >= 3) {
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+
+            for (var i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(0, 150, 255, 0.5)';
+            ctx.fill();
+            ctx.stroke();
+        } else {
+            console.error('Se requieren al menos 3 puntos para dibujar un polígono.');
+        }
+    };
+
+
     var getMousePosition = function (evt) {
         var canvas = document.getElementById("canvas");
         var rect = canvas.getBoundingClientRect();
@@ -66,20 +88,26 @@ var app = (function () {
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
+
             stompClient.subscribe('/topic/newpoint.' + topic, function (eventbody) {
-                var theObject = JSON.parse(eventbody.body);
-                console.log('Received point:', theObject);
-                addPointToCanvas(theObject);
+                var point = JSON.parse(eventbody.body);
+                addPointToCanvas(point);
+            });
+
+            stompClient.subscribe('/topic/newpolygon.' + topic, function (eventbody) {
+                var polygon = JSON.parse(eventbody.body);
+                drawPolygonOnCanvas(polygon.points);
             });
         }, function (error) {
             console.error('STOMP error: ' + error);
         });
     };
 
+
     var publishPoint = function(px, py) {
         var pt = new Point(px, py);
         console.info("Publishing point at: ", pt);
-        stompClient.send("/topic/newpoint." + topic, {}, JSON.stringify(pt));
+        stompClient.send("/app/newpoint." + topic, {}, JSON.stringify(pt));
     };
 
     return {
