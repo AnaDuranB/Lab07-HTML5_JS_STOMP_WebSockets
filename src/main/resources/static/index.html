@@ -15,22 +15,29 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-drawing WebSocket App</title>
+    <title>Collab Paint</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
-<input id="topic" type="number" />
-<button onclick="app.setTopic(document.getElementById('topic').value)">Conectarse</button>
+<div class="container mt-5">
+    <div class="form-row justify-content-center">
+        <div class="col-md-4">
+            <input type="text" id="drawingId" class="form-control" placeholder="Ingrese ID del dibujo" />
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary btn-block" onclick="app.setTopic(document.getElementById('drawingId').value)">Conectarse</button>
+        </div>
+    </div>
+    <canvas id="canvas" width="800" height="600" class="border mt-3" style="display: block; margin: 0 auto;"></canvas>
+</div>
 
-<br><br>
-<canvas id="canvas" width="400" height="400" style="border:1px solid black"></canvas>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -7,14 +7,14 @@ var app = (function () {
     }
 
     var stompClient = null;
-    var topic = null;
+    var topic;
 
     var setTopic = function (number) {
         topic = number;
         if (!stompClient) {
             connectAndSubscribe();
         } else {
-            stompClient.disconnect();
+            stompClient.unsubscribe();
             connectAndSubscribe();
         }
         clearCanvas();
@@ -35,16 +35,21 @@ var app = (function () {
     };
 
     var addPointToCanvas = function (point) {
-        console.log('Adding point to canvas: ', point);
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
-        ctx.fillStyle = 'black';
-        ctx.fill();
-        ctx.stroke();
+        console.log('Received point:', point);
+        if (typeof point.x !== 'undefined' && typeof point.y !== 'undefined') {
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.stroke();
+        } else {
+            console.error('Invalid point format:', point);
+        }
     };
 
+    // Obtiene la posición del ratón en el canvas
     var getMousePosition = function (evt) {
         var canvas = document.getElementById("canvas");
         var rect = canvas.getBoundingClientRect();
@@ -55,16 +60,15 @@ var app = (function () {
     };
 
     var connectAndSubscribe = function () {
-        console.info('Connecting to WS...');
+        console.info('Connecting to WebSocket...');
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            console.log('Subscribing to topic: /topic/newpoint.' + topic);
             stompClient.subscribe('/topic/newpoint.' + topic, function (eventbody) {
                 var theObject = JSON.parse(eventbody.body);
-                console.log('Received point: ', theObject);
+                console.log('Received point:', theObject);
                 addPointToCanvas(theObject);
             });
         }, function (error) {
@@ -75,7 +79,7 @@ var app = (function () {
     var publishPoint = function(px, py) {
         var pt = new Point(px, py);
         console.info("Publishing point at: ", pt);
-        stompClient.send("/app/newpoint." + topic, {}, JSON.stringify(pt));
+        stompClient.send("/topic/newpoint." + topic, {}, JSON.stringify(pt));
     };
 
     return {
@@ -93,6 +97,4 @@ var app = (function () {
     };
 })();
 
-window.onload = function () {
-    app.init();
-};
+app.init();
