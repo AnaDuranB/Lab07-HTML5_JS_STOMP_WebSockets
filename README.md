@@ -102,6 +102,8 @@ Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez
 	git commit -m "PARTE 3".
 	```
 
+![image](https://github.com/user-attachments/assets/edfd52ea-2947-4a3e-bfa9-848dc314b427)
+
 
 ## Parte IV.
 
