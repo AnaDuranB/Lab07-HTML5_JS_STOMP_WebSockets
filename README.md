@@ -48,7 +48,23 @@ Para esto, realice lo siguiente:
 	var theObject=JSON.parse(message.body);
 	```
 3. Compile y ejecute su aplicación. Abra la aplicación en varias pestañas diferentes (para evitar problemas con el caché del navegador, use el modo 'incógnito' en cada prueba).
+
+	![image](https://github.com/user-attachments/assets/df4a29fa-7401-40c8-b8e4-abe3b324991a)
+
 4. Ingrese los datos, ejecute la acción del botón, y verifique que en todas la pestañas se haya lanzado la alerta con los datos ingresados.
+
+	- Revisamos la primer pestaña
+
+		![image](https://github.com/user-attachments/assets/6099aeb8-5e6b-4309-9f4a-eb8360ac84e3)
+
+	- Revisamos la segunda pestaña
+
+		![image](https://github.com/user-attachments/assets/0390993f-9d92-40d8-aed2-c0bf1ed03144)
+
+	- Y por último la tercera, verificando así que en todas la pestañas se haya lanzado la alerta con los datos ingresados
+
+		![image](https://github.com/user-attachments/assets/7807831b-4a54-4723-ba13-72639990b169)
+
 
 5. Haga commit de lo realizado, para demarcar el avance de la parte 2.
 
