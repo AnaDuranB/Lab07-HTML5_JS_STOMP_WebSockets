@@ -15,24 +15,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collaborative Drawing App</title>
-    <script src="/webjars/jquery/jquery.min.js"></script>
-    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app.js"></script>
-    <style>
-        canvas {
-            border: 1px solid black;
-            display: block;
-            margin: 20px auto;
-        }
-    </style>
+    <title>Multi-drawing WebSocket App</title>
 </head>
-<body onload="app.init()">
-<canvas id="canvas" width="800" height="600"></canvas>
+<body>
+<input id="topic" type="number" />
+<button onclick="app.setTopic(document.getElementById('topic').value)">Conectarse</button>
+
+<br><br>
+<canvas id="canvas" width="400" height="400" style="border:1px solid black"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
